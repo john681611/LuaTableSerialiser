@@ -1,4 +1,4 @@
-# C# Data to Lua Table
+# Lua Table Serialiser
 Silly little bit of code to convert C# data to a string representing a Lua Table
 
 ## Example

@@ -1,4 +1,4 @@
-﻿using CSharpeToLua;
+﻿using LuaTableSerialiser;
 
 var lst = new List<string>(){"Hey", "You"};
 var dict = new Dictionary<string, object>{
@@ -13,6 +13,13 @@ var dict = new Dictionary<string, object>{
         {"4", 4},
         }
     },
+    {"dictNumKey", new Dictionary<int, int>{
+        {1, 1},
+        {2, 2},
+        {3, 3},
+        {4, 4},
+        }
+    },
     {"dictOBJ", new Dictionary<string, object>{
         {"1", 1},
         {"1.5", 1.5},
@@ -21,4 +28,7 @@ var dict = new Dictionary<string, object>{
         }
     }
 };
-Console.WriteLine($"mission = {CSharpToLua.ToLuaTableString(dict)}");
+var serialisedData = LuaSerialiser.Serialize(dict);
+Console.WriteLine($"mission = {serialisedData}");
+var deserialised  =  LuaSerialiser.Deserialize(serialisedData);
+Utils.PrintDict(deserialised);
