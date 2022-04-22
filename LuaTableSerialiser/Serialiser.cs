@@ -15,9 +15,24 @@ namespace LuaTableSerialiser
                 double value => value,
                 IList value => ListToLua(value, nesting),
                 IDictionary value => DictToLua(value, nesting),
-                _ => throw new ArgumentOutOfRangeException(nameof(item), $"Not expected value Type value: {item}")
+                _ => TryToLuaString(item)
             };
         }
+
+        private static object TryToLuaString(object item)
+        {
+            try
+            {
+                return item.GetType().GetMethod("ToLuaString").Invoke(item, null);
+            }
+            catch (System.Exception e)
+            {
+
+                throw new ArgumentOutOfRangeException($"Not expected value Type value: {item}", e);
+            }
+            
+        }
+        
         private static string ConvertKey(object key) => key switch
         {
             string => $"[\"{key}\"]",

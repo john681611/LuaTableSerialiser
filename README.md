@@ -101,3 +101,16 @@ K:dictOBJ V:
                 K:1 V:Hey
                 K:2 V:You
 ```
+
+## Classes
+
+Classes can support serialization with the function `public string ToLuaString()`
+This is just so you can output an class how you want and often incorporates a nested serialization
+
+```
+ public string ToLuaString()
+ {
+        var obj = newDictionary<string,string>{{"value",value}};
+        return LuaSerialiser.Serialize(obj);
+ }
+```

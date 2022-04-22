@@ -88,4 +88,23 @@ public class SerialiserTests
         formatResult.Should().Be(@"{[""Dave""] = {[""bob""] = ""1"",[""jim""] = ""2"",},[""Ian""] = {[""bob""] = ""1"",[""jim""] = ""2"",},}");
     }
 
+    [Fact]
+    public void Serialise_Class_with_ToLuaString()
+    {
+        var result = LuaSerialiser.Serialize(new testClass("dark side"));
+        var formatResult = result.Replace("\t", "").Replace("\n", "");
+        formatResult.Should().Be(@"{[""value""] = ""dark side"",}");
+    }
+
+    private class testClass {
+        private string value {get; set;}
+
+        internal testClass(string _value)
+        {
+            value = _value;
+        }
+
+        public string ToLuaString() => LuaSerialiser.Serialize(new Dictionary<string,string>{{"value",value}});
+    }
+
 }
