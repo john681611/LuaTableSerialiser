@@ -14,6 +14,8 @@ public class LuaSerialiserTests
         {"Bob", 1},
         {"James", 1.1},
         {"Sid", "Sid"},
+        {"Kieth", true},
+        {"Dave", false},
         {"list", _testList},
         {"dict", new Dictionary<string, int>{
             {"1", 1},
@@ -43,7 +45,7 @@ public void Serialise_NestedObject_ReturnString()
     {
         var result = LuaSerialiser.Serialize(_testDict);
         var formatResult = result.Replace("\t","").Replace("\n", "");
-        formatResult.Should().Be(@"{[""Bob""] = 1,[""James""] = 1.1,[""Sid""] = ""Sid"",[""list""] = {[1] = ""Hey"",[2] = ""You"",},[""dict""] = {[""1""] = 1,[""2""] = 2,[""3""] = 3,[""4""] = 4,},[""dictNumKey""] = {[1] = 1,[2] = 2,[3] = 3,[4] = 4,},[""dictOBJ""] = {[""1""] = 1,[""1.5""] = 1.5,[""str""] = ""item"",[""lst""] = {[1] = ""Hey"",[2] = ""You"",},},}");
+        formatResult.Should().Be(@"{[""Bob""] = 1,[""James""] = 1.1,[""Sid""] = ""Sid"",[""Kieth""] = true,[""Dave""] = false,[""list""] = {[1] = ""Hey"",[2] = ""You"",},[""dict""] = {[""1""] = 1,[""2""] = 2,[""3""] = 3,[""4""] = 4,},[""dictNumKey""] = {[1] = 1,[2] = 2,[3] = 3,[4] = 4,},[""dictOBJ""] = {[""1""] = 1,[""1.5""] = 1.5,[""str""] = ""item"",[""lst""] = {[1] = ""Hey"",[2] = ""You"",},},}");
     }
 
     [Fact]
@@ -53,6 +55,8 @@ public void Serialise_NestedObject_ReturnString()
         [""Bob""] = 1,
         [""James""] = 1.1,
         [""Sid""] = ""Sid"",
+        [""Kieth""] = true,
+        [""Dave""] = false,
         [""list""] = {
                 [1] = ""Hey"",
                 [2] = ""You"",
@@ -80,6 +84,6 @@ public void Serialise_NestedObject_ReturnString()
                 },
         }");
         var jsonResult = JsonConvert.SerializeObject(result);
-        jsonResult.Should().Be(@"{""Bob"":1,""James"":1.1,""Sid"":""Sid"",""list"":{""1"":""Hey"",""2"":""You""},""dict"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictNumKey"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictOBJ"":{""1"":1,""1.5"":1.5,""str"":""item"",""lst"":{""1"":""Hey"",""2"":""You""}}}");
+        jsonResult.Should().Be(@"{""Bob"":1,""James"":1.1,""Sid"":""Sid"",""Kieth"":true,""Dave"":false,""list"":{""1"":""Hey"",""2"":""You""},""dict"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictNumKey"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictOBJ"":{""1"":1,""1.5"":1.5,""str"":""item"",""lst"":{""1"":""Hey"",""2"":""You""}}}");
     }
 }

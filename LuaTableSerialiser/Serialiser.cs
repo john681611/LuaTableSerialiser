@@ -11,6 +11,7 @@ namespace LuaTableSerialiser
                 string value => EscapeString(value),
                 int value => value,
                 float value => value,
+                bool value => value.ToString().ToLower(),
                 double value => value,
                 IList value => ListToLua(value, nesting),
                 IDictionary value => DictToLua(value, nesting),
