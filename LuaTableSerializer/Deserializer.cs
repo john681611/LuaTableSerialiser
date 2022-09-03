@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace LuaTableSerialiser
+namespace LuaTableSerializer
 {
     public class Deserializer
     {
@@ -15,9 +16,8 @@ namespace LuaTableSerialiser
             return ConvertTypes(deserializedData);
         }
 
-        private static Dictionary<object, object> ConvertTypes(Dictionary<string, object>? data)
+        private static Dictionary<object, object> ConvertTypes(Dictionary<string, object> data)
         {
-            ArgumentNullException.ThrowIfNull(data);
             var dict = new Dictionary<object, object>();
             foreach (var x in data)
             {

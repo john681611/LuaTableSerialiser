@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
-namespace LuaTableSerialiser
+namespace LuaTableSerializer
 {
     public class Utils
     {

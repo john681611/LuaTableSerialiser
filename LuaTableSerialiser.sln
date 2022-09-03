@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaTableSerialiser", "LuaTableSerialiser\LuaTableSerialiser.csproj", "{31DA6998-70A1-40D8-A99D-31795311CFC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaTableSerializer", "LuaTableSerializer\LuaTableSerializer.csproj", "{31DA6998-70A1-40D8-A99D-31795311CFC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{13198F30-3066-41A4-A5E4-C213E14C8884}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\LuaTableSerialiser.Tests.csproj", "{690388BF-EDC1-4BF7-B659-F2C9783938AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\LuaTableSerializer.Tests.csproj", "{690388BF-EDC1-4BF7-B659-F2C9783938AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

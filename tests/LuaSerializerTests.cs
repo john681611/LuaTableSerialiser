@@ -3,13 +3,13 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace LuaTableSerialiser.Tests;
-
-public class LuaSerialiserTests
+namespace LuaTableSerializer.Tests
 {
+    public class LuaSerializerTests
+    {
 
-    private readonly static List<string> _testList = new(){"Hey", "You"};
-    private readonly static Dictionary<string, object> _testDict = new()
+        private readonly static List<string> _testList = new() { "Hey", "You" };
+        private readonly static Dictionary<string, object> _testDict = new()
     {
         {"Bob", 1},
         {"James", 1.1},
@@ -40,18 +40,18 @@ public class LuaSerialiserTests
         }
     };
 
-    [Fact]
-public void Serialise_NestedObject_ReturnString()
-    {
-        var result = LuaSerialiser.Serialize(_testDict);
-        var formatResult = result.Replace("\t","").Replace("\n", "");
-        formatResult.Should().Be(@"{[""Bob""] = 1,[""James""] = 1.1,[""Sid""] = ""Sid"",[""Kieth""] = true,[""Dave""] = false,[""list""] = {[1] = ""Hey"",[2] = ""You"",},[""dict""] = {[""1""] = 1,[""2""] = 2,[""3""] = 3,[""4""] = 4,},[""dictNumKey""] = {[1] = 1,[2] = 2,[3] = 3,[4] = 4,},[""dictOBJ""] = {[""1""] = 1,[""1.5""] = 1.5,[""str""] = ""item"",[""lst""] = {[1] = ""Hey"",[2] = ""You"",},},}");
-    }
+        [Fact]
+        public void Serialise_NestedObject_ReturnString()
+        {
+            var result = LuaSerializer.Serialize(_testDict);
+            var formatResult = result.Replace("\t", "").Replace("\n", "");
+            formatResult.Should().Be(@"{[""Bob""] = 1,[""James""] = 1.1,[""Sid""] = ""Sid"",[""Kieth""] = true,[""Dave""] = false,[""list""] = {[1] = ""Hey"",[2] = ""You"",},[""dict""] = {[""1""] = 1,[""2""] = 2,[""3""] = 3,[""4""] = 4,},[""dictNumKey""] = {[1] = 1,[2] = 2,[3] = 3,[4] = 4,},[""dictOBJ""] = {[""1""] = 1,[""1.5""] = 1.5,[""str""] = ""item"",[""lst""] = {[1] = ""Hey"",[2] = ""You"",},},}");
+        }
 
-    [Fact]
-    public void Deserialize_NestedObject_ReturnsDictionary()
-    {
-        var result =  LuaSerialiser.Deserialize(@"{
+        [Fact]
+        public void Deserialize_NestedObject_ReturnsDictionary()
+        {
+            var result = LuaSerializer.Deserialize(@"{
         [""Bob""] = 1,
         [""James""] = 1.1,
         [""Sid""] = ""Sid"",
@@ -83,7 +83,8 @@ public void Serialise_NestedObject_ReturnString()
                         },
                 },
         }");
-        var jsonResult = JsonConvert.SerializeObject(result);
-        jsonResult.Should().Be(@"{""Bob"":1,""James"":1.1,""Sid"":""Sid"",""Kieth"":true,""Dave"":false,""list"":{""1"":""Hey"",""2"":""You""},""dict"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictNumKey"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictOBJ"":{""1"":1,""1.5"":1.5,""str"":""item"",""lst"":{""1"":""Hey"",""2"":""You""}}}");
+            var jsonResult = JsonConvert.SerializeObject(result);
+            jsonResult.Should().Be(@"{""Bob"":1,""James"":1.1,""Sid"":""Sid"",""Kieth"":true,""Dave"":false,""list"":{""1"":""Hey"",""2"":""You""},""dict"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictNumKey"":{""1"":1,""2"":2,""3"":3,""4"":4},""dictOBJ"":{""1"":1,""1.5"":1.5,""str"":""item"",""lst"":{""1"":""Hey"",""2"":""You""}}}");
+        }
     }
 }

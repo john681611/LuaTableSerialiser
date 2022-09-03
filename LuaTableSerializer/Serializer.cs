@@ -1,45 +1,45 @@
+using System;
 using System.Collections;
+using System.Linq;
 
-namespace LuaTableSerialiser
+namespace LuaTableSerializer
 {
-    internal class Serialiser
+    internal class Serializer
     {
-        internal static object ConvertType(object item, int nesting = 1)
+        internal static object ConvertType(object item, int nesting = 1, int index = 0)
         {
             return item switch
             {
-                string value => EscapeString(value),
+                bool value => value.ToString().ToLower(),
                 int value => value,
                 float value => value,
-                bool value => value.ToString().ToLower(),
                 double value => value,
+                string value => EscapeString(value),
                 IList value => ListToLua(value, nesting),
                 IDictionary value => DictToLua(value, nesting),
-                _ => TryToLuaString(item)
+                _ => TryToLuaString(item, index)
             };
         }
 
-        private static object TryToLuaString(object item)
+        private static object TryToLuaString(object item, int index)
         {
-            try
-            {
-                return item.GetType().GetMethod("ToLuaString").Invoke(item, null);
-            }
-            catch (System.Exception e)
-            {
 
-                throw new ArgumentOutOfRangeException($"Not expected value Type value: {item}", e);
-            }
-            
+                var method = item.GetType().GetMethod("ToLuaString");
+                if (method is null)
+                   throw new MissingMethodException($"{item} has no accessible ToLuaString method"); 
+                if (method.GetParameters().Count() > 0)
+                    return method.Invoke(item, new object[] { index });
+                return method.Invoke(item, null);
+
         }
-        
+
         private static string ConvertKey(object key) => key switch
         {
             string => $"[\"{key}\"]",
             int => $"[{key}]",
             _ => throw new ArgumentOutOfRangeException(nameof(key), $"Not expected key Type value: {key}")
         };
-        
+
         private static string DictToLua<T>(T data, int nesting) where T : IDictionary
         {
             var str = "{";
@@ -58,7 +58,7 @@ namespace LuaTableSerialiser
             var index = 1;
             foreach (var item in data)
             {
-                str += $"\n{Utils.GetNesting(nesting)}{ConvertKey(index)} = {ConvertType(item, nesting + 1)},";
+                str += $"\n{Utils.GetNesting(nesting)}{ConvertKey(index)} = {ConvertType(item, nesting + 1, index)},";
                 index++;
             }
             return $"{str}\n{Utils.GetNesting(nesting)}}}";
@@ -68,7 +68,7 @@ namespace LuaTableSerialiser
         {
             var value = data
                 .Replace("\\", "\\\\")
-                .Replace("\t","\\t")
+                .Replace("\t", "\\t")
                 .Replace("\n", "\\n")
                 .Replace("\r", "\\r")
                 .Replace("\"", "\\\"")
