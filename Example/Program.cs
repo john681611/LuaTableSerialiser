@@ -1,4 +1,6 @@
-﻿using LuaTableSerialiser;
+﻿using System;
+using System.Collections.Generic;
+using LuaTableSerializer;
 
 var lst = new List<string>(){"Hey", "You"};
 var dict = new Dictionary<string, object>{
@@ -28,7 +30,7 @@ var dict = new Dictionary<string, object>{
         }
     }
 };
-var serialisedData = LuaSerialiser.Serialize(dict);
+var serialisedData = LuaSerializer.Serialize(dict);
 Console.WriteLine($"mission = {serialisedData}");
-var deserialised  =  LuaSerialiser.Deserialize(serialisedData);
+var deserialised  =  LuaSerializer.Deserialize(serialisedData);
 Utils.PrintDict(deserialised);

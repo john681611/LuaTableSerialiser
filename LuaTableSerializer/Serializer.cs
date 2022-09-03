@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
+using System.Linq;
 
-namespace LuaTableSerialiser
+namespace LuaTableSerializer
 {
-    internal class Serialiser
+    internal class Serializer
     {
         internal static object ConvertType(object item, int nesting = 1, int index = 0)
         {

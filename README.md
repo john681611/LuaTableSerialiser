@@ -1,4 +1,4 @@
-# Lua Table Serialiser
+# Lua Table Serializer
 Serialise/Deserialize C# data into a string representing a Lua Table
 
 
@@ -6,7 +6,7 @@ Serialise/Deserialize C# data into a string representing a Lua Table
 
 Code:
 ```c#
-using LuaTableSerialiser;
+using LuaTableSerializer;
 
 var lst = new List<string>(){"Hey", "You"};
 var dict = new Dictionary<string, object>{
@@ -36,9 +36,9 @@ var dict = new Dictionary<string, object>{
         }
     }
 };
-var serialisedData = LuaSerialiser.Serialize(dict);
+var serialisedData = LuaSerializer.Serialize(dict);
 Console.WriteLine($"mission = {serialisedData}");
-var deserialised  =  LuaSerialiser.Deserialize(serialisedData);
+var deserialised  =  LuaSerializer.Deserialize(serialisedData);
 Utils.PrintDict(deserialised);
 
 ```
@@ -111,6 +111,6 @@ This is just so you can output an class how you want and often incorporates a ne
  public string ToLuaString()
  {
         var obj = newDictionary<string,string>{{"value",value}};
-        return LuaSerialiser.Serialize(obj);
+        return LuaSerializer.Serialize(obj);
  }
 ```
