@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
@@ -96,15 +97,55 @@ public class SerialiserTests
         formatResult.Should().Be(@"{[""value""] = ""dark side"",}");
     }
 
-    private class testClass {
-        private string value {get; set;}
+    [Fact]
+    public void Serialise_Class_with_ToLuaString_with_index()
+    {
+        var result = LuaSerialiser.Serialize(new testUseIndexClass(666));
+        var formatResult = result.Replace("\t", "").Replace("\n", "");
+        formatResult.Should().Be(@"{[1] = {[""value""] = 666,[""index""] = 0,},}");
+    }
+
+    [Fact]
+    public void Serialise_Class_with_no_ToLuaString()
+    {
+        Action act = () => LuaSerialiser.Serialize(new testNoConvertClass("dark side"));
+        act.Should().Throw<MissingMethodException>()
+            .WithMessage("LuaTableSerialiser.Tests.SerialiserTests+testNoConvertClass has no accessible ToLuaString method");
+    }
+
+    private class testClass
+    {
+        private string value { get; set; }
 
         internal testClass(string _value)
         {
             value = _value;
         }
 
-        public string ToLuaString() => LuaSerialiser.Serialize(new Dictionary<string,string>{{"value",value}});
+        public string ToLuaString() => LuaSerialiser.Serialize(new Dictionary<string, string> { { "value", value } });
+    }
+
+    private class testUseIndexClass
+    {
+        private int value { get; set; }
+
+        internal testUseIndexClass(int _value)
+        {
+            value = _value;
+        }
+
+        public string ToLuaString(int index) => LuaSerialiser.Serialize(new List<Dictionary<string, int>> { { new Dictionary<string, int> { { "value", value }, { "index", index } } } });
+    }
+
+    private class testNoConvertClass
+    {
+        private string value { get; set; }
+
+        internal testNoConvertClass(string _value)
+        {
+            value = _value;
+        }
+
     }
 
 }

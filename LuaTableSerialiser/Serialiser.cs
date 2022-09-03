@@ -21,15 +21,13 @@ namespace LuaTableSerialiser
 
         private static object TryToLuaString(object item, int index)
         {
-            try
-            {
-                return item.GetType().GetMethod("ToLuaString").Invoke(item, new object[] { index });
-            }
-            catch (System.Exception e)
-            {
-                Console.WriteLine(e);
-                throw new ArgumentOutOfRangeException(nameof(item), $"Not expected value Type value: {item}");
-            }
+
+                var method = item.GetType().GetMethod("ToLuaString");
+                if (method is null)
+                   throw new MissingMethodException($"{item} has no accessible ToLuaString method"); 
+                if (method.GetParameters().Count() > 0)
+                    return method.Invoke(item, new object[] { index });
+                return method.Invoke(item, null);
 
         }
 
