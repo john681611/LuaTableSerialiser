@@ -1,5 +1,4 @@
-
-namespace LuaTableSerialiser 
+namespace LuaTableSerialiser
 {
     public class LuaSerialiser
     {

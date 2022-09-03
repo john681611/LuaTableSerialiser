@@ -15,9 +15,8 @@ namespace LuaTableSerialiser
             return ConvertTypes(deserializedData);
         }
 
-        private static Dictionary<object, object> ConvertTypes(Dictionary<string, object>? data)
+        private static Dictionary<object, object> ConvertTypes(Dictionary<string, object> data)
         {
-            ArgumentNullException.ThrowIfNull(data);
             var dict = new Dictionary<object, object>();
             foreach (var x in data)
             {
