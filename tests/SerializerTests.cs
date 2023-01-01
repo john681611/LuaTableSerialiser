@@ -11,6 +11,7 @@ namespace LuaTableSerializer.Tests
         [Theory]
         [InlineData("Hello", @"""Hello""")]
         [InlineData((int)1, "1")]
+        [InlineData((Int64)52613349374, "52613349374")]
         [InlineData((float)1.4, "1.4")]
         [InlineData((double)1.2, "1.2")]
         public void Serialise_VariertyOfTypes_ReturnString(object data, string expected)

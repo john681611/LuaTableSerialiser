@@ -12,6 +12,7 @@ namespace LuaTableSerializer
             {
                 bool value => value.ToString().ToLower(),
                 int value => value,
+                Int64 value => value,
                 float value => value,
                 double value => value,
                 string value => EscapeString(value),
